@@ -1,7 +1,7 @@
 package modules
 
 import "core:fmt"
-import "core:os"
+import os "core:os/os2"
 import "core:strconv"
 import "core:strings"
 
@@ -12,18 +12,17 @@ Uptime :: struct {
 
 @(private)
 get_system_uptime_in_seconds :: proc() -> (int, bool) {
-	fd, err := os.open("/proc/uptime")
+	file, file_err := os.open("/proc/uptime")
+	if file_err != os.ERROR_NONE {
+		return 0, false
+	}
+
+	data, err := os.read_entire_file_from_file(file, context.temp_allocator)
 	if err != os.ERROR_NONE {
 		return 0, false
 	}
 
-	buf: [24]u8
-	_, err = os.read_full(fd, buf[0:])
-	if err != os.ERROR_NONE {
-		return 0, false
-	}
-
-	fields := strings.fields(string(buf[:]))
+	fields := strings.fields(string(data[:]))
 	defer delete(fields)
 
 	uptime_seconds := strconv.atoi(fields[0])

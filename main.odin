@@ -3,13 +3,12 @@ package main
 import "app"
 import "core:fmt"
 import "core:mem"
-import "core:os"
 
 name :: "systema"
 version :: #config(VERSION, "dev")
 
 _main :: proc() {
-  defer free_all(context.temp_allocator)
+	defer free_all(context.temp_allocator)
 
 	app.init(name, version)
 }
