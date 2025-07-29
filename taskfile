@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# -----------------------------------------------------------------------------
+# Helper functions start with _ and aren't listed in this script's help menu.
+# -----------------------------------------------------------------------------
+
+set -euo pipefail
+
+PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+
+TTY="${TTY:-}"
+if [[ ! -t 1 ]]; then
+  TTY="-T"
+fi
+
+VERSION="$(cat "$PROJECT_ROOT"/VERSION)"
+
+help() {
+  echo ""
+  echo "-------------------"
+  echo " tsk [task] [args] "
+  echo "-------------------"
+  declare -F | awk '{print "◉ " $3}' | grep -v "^_" | sort
+}
+
+run() {
+  odin run "$PROJECT_ROOT" -define="VERSION=$VERSION" "$@"
+}
+
+debug() {
+  odin run "$PROJECT_ROOT" -define="VERSION=$VERSION" -debug "$@"
+}
+
+debug:sanitize() {
+  odin run "$PROJECT_ROOT" -define="VERSION=$VERSION" -debug -sanitize:address "$@"
+}
+
+build() {
+  odin build "$PROJECT_ROOT" -define="VERSION=$VERSION" -o:speed "$@"
+}
+
+vhs() {
+  command vhs "$PROJECT_ROOT"/vhs/systema.tape
+}
+
+TIMEFORMAT=$'\nTask completed in %3lR'
+time "${@:-help}"
