@@ -13,6 +13,7 @@ Memory :: struct {
 @(private)
 get_meminfo :: proc(memory: ^Memory) -> (err: os.Error) {
 	file, file_err := os.open("/proc/meminfo")
+	defer os.close(file)
 	if file_err != os.ERROR_NONE {
 		return file_err
 	}

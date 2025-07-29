@@ -13,6 +13,7 @@ Uptime :: struct {
 @(private)
 get_system_uptime_in_seconds :: proc() -> (int, bool) {
 	file, file_err := os.open("/proc/uptime")
+	defer os.close(file)
 	if file_err != os.ERROR_NONE {
 		return 0, false
 	}
