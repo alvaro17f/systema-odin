@@ -9,7 +9,7 @@ get_kernel_info :: proc() -> string {
 	posix.uname(&uname)
 
 	return fmt.tprintf(
-		"Kernel: %s %d.%d.%d (%s)",
+		"%s %d.%d.%d (%s)",
 		info.os_version.platform,
 		info.os_version.major,
 		info.os_version.minor,
