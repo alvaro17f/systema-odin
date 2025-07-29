@@ -11,7 +11,9 @@ Systema is a system information tool written in Odin that provides detailed insi
 - Real-time system monitoring
 - Hardware information retrieval
 - System resource usage tracking
-- Cross-platform compatibility
+- CPU, memory, storage, and uptime information
+- Desktop environment detection
+- Kernel version and hostname display
 
 ## Installation
 
@@ -32,14 +34,6 @@ cd systema
 
 # Run the application
 ./taskfile run
-```
-
-### Using Nix
-
-If you're using Nix, you can enter a development shell with all dependencies:
-
-```bash
-nix develop
 ```
 
 ## Usage
@@ -70,12 +64,28 @@ nix develop
 
 ```
 .
-├── lib/              # Odin library files
-├── vhs/              # Terminal recordings
-├── taskfile          # Build and run scripts
-├── flake.nix         # Nix configuration
-├── VERSION           # Version information
-└── README.md         # This file
+├── app/                # Application entry point
+├── colors/             # Color definitions and utilities
+├── models/             # Data models and structures
+├── modules/            # System information modules
+│   ├── colors.odin   # Color system info
+│   ├── cpu.odin      # CPU information
+│   ├── desktop.odin  # Desktop environment detection
+│   ├── hostname.odin # Hostname utilities
+│   ├── kernel.odin   # Kernel information
+│   ├── memory.odin   # Memory usage
+│   ├── shell.odin    # Shell detection
+│   ├── storage.odin  # Storage information
+│   ├── system.odin   # System information
+│   ├── uptime.odin   # System uptime
+│   ├── username.odin # User information
+│   └── ...
+├── utils/              # Utility functions
+├── vhs/                # Terminal recordings
+├── taskfile           # Build and run scripts
+├── flake.nix          # Nix configuration
+├── VERSION            # Version information
+└── README.md          # This file
 ```
 
 ### Taskfile Commands
