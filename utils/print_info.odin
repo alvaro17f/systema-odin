@@ -1,17 +1,38 @@
 package utils
 
+import "../colors"
 import "../models"
 import "core:fmt"
+import "core:strings"
+
+@(private)
+SPACE_SIZE :: 14
+
+@(private)
+print_info_line :: proc(icon, title, info: string) {
+	spacing := strings.repeat(" ", SPACE_SIZE - len(title), context.temp_allocator)
+
+	fmt.printfln(
+		"{}{}  {}{}{}{} {}",
+		colors.CYAN,
+		icon,
+		colors.BLUE,
+		title,
+		spacing,
+		colors.RESET,
+		info,
+	)
+}
 
 print_info :: proc(system: models.System) {
-	fmt.printfln("  User          %s@%s", system.username, system.hostname)
-	fmt.printfln("  System        {}", system.system)
-	fmt.printfln("  Kernel        {}", system.kernel)
-	fmt.printfln("  CPU           {}", system.cpu)
-	fmt.printfln("  Shell         {}", system.shell)
-	fmt.printfln("  Uptime        {}", system.uptime)
-	fmt.printfln("  Desktop       {}", system.desktop)
-	fmt.printfln("  Memory        {}", system.memory)
-	fmt.printfln("󱥎  Storage (/)   {}", system.storage)
-	fmt.printfln("  Colors        {}", system.colors)
+	print_info_line("", "User", fmt.tprintf("%s@%s", system.username, system.hostname))
+	print_info_line("", "System", system.system)
+	print_info_line("", "Kernel", system.kernel)
+	print_info_line("", "Desktop", system.desktop)
+	print_info_line("", "CPU", system.cpu.(string))
+	print_info_line("", "Shell", system.shell)
+	print_info_line("", "Uptime", system.uptime)
+	print_info_line("", "Memory", system.memory)
+	print_info_line("󱥎", "Storage (/)", system.storage)
+	print_info_line("", "Colors", system.colors)
 }
