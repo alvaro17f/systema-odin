@@ -50,7 +50,7 @@ get_memory_info :: proc() -> string {
 	}
 
 	return fmt.tprintf(
-		"%.2fGiB / %.2fGiB (%0.f%%)",
+		"%.2f GiB / %.2f GiB (%0.f%%)",
 		meminfo.used,
 		meminfo.total,
 		meminfo.used_percent,
