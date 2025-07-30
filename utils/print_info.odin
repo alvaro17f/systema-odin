@@ -78,6 +78,7 @@ print_info_with_logo :: proc(config: models.Config, logo: ^[dynamic]string, info
 		if index < len(info) {
 			row = fmt.tprintf("%s%s", row, info[index])
 		}
+
 		fmt.println(row)
 	}
 }

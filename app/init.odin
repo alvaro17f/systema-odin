@@ -7,8 +7,10 @@ import "../modules"
 import "../utils"
 
 config := models.Config {
-	logo       = true,
-	logo_color = colors.CYAN,
+	logo        = true,
+	logo_color  = colors.CYAN,
+	logo_path   = "",
+	info_offset = 10,
 }
 
 init :: proc(name, version: string) {
@@ -27,15 +29,7 @@ init :: proc(name, version: string) {
 	}
 
 
-	logo := [dynamic]string {
-		"",
-		"    (.. \\",
-		"    (<> |",
-		"   //  \\ \\",
-		"  ( |  | /|",
-		" _/\\ __)/_)",
-		" \\/-____\\/",
-	}
+	logo := utils.get_logo(config.logo_path)
 	defer delete(logo)
 
 	info := []string {
