@@ -11,13 +11,14 @@ import "core:strings"
 help :: proc(app_name: string) {
 	fmt.printfln(
 		`
-{}***********************************************************
+{}*************************************************************
  {}%s{} - Fetch system information with style
-{}***********************************************************{}
+{}*************************************************************{}
 -d:           Disable logo
 -l <path>:    Set the logo path
--c <color>:   Set the logo color
--o <offset>:  Set the info offset vertically
+-c <color>:   Set the logo color by ansi number [default: 36]
+-g <gap>:     Set the gap between logo and info [default:  3]
+-o <offset>:  Set the info offset vertically    [default:  0]
 -h, help:     Display this help message
 -v, version:  Display the current version{}
   `,
@@ -64,6 +65,10 @@ flags :: proc(config: ^models.Config) {
 		case "-c":
 			color := (arguments[idx + 1])
 			config.logo_color = fmt.tprintf("\033[{}m", color)
+		case "-g":
+			index := len(arguments) > idx + 1 ? idx + 1 : 0
+			gap, _ := strconv.parse_int(arguments[index], 10)
+			config.logo_gap = gap
 		case "-o":
 			index := len(arguments) > idx + 1 ? idx + 1 : 0
 			offset, _ := strconv.parse_int(arguments[index], 10)

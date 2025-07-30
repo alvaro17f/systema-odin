@@ -6,9 +6,6 @@ import "core:fmt"
 import "core:strings"
 
 @(private)
-LOGO_GAP :: 5
-
-@(private)
 INFO_TITLE_SIZE :: 14
 
 add_info_offset :: proc(info: [dynamic]string, offset: int) -> [dynamic]string {
@@ -81,7 +78,7 @@ print_info_with_logo :: proc(
 		}
 	}
 
-	row_size := longest_row + LOGO_GAP
+	row_size := longest_row + config.logo_gap
 
 	for &row, index in logo {
 		if len(row) < row_size {

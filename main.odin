@@ -14,6 +14,7 @@ config := models.Config {
 	version     = version,
 	logo        = true,
 	logo_color  = colors.CYAN,
+	logo_gap    = 3,
 	logo_path   = "",
 	info_offset = 0,
 }
