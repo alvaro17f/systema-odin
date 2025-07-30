@@ -52,11 +52,9 @@ flags :: proc(config: ^models.Config) {
 		switch (argument) {
 		case "-h", "help":
 			help(config.name)
-
 			os.exit(0)
 		case "-v", "version":
 			version(config.name, config.version)
-
 			os.exit(0)
 		case "-d":
 			config.logo = false
