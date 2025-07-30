@@ -6,13 +6,27 @@ import "core:fmt"
 import "core:strings"
 
 @(private)
-SPACE_SIZE :: 14
+LOGO_GAP :: 5
 
 @(private)
-print_info_line :: proc(icon, title, info: string) {
-	spacing := strings.repeat(" ", SPACE_SIZE - len(title), context.temp_allocator)
+INFO_TITLE_SIZE :: 14
 
-	fmt.printfln(
+build_username_hostname_line :: proc(system: models.System, user: string, host: [65]u8) -> string {
+	return fmt.tprintf(
+		"{}%s{}@{}%s{} ~",
+		colors.YELLOW,
+		system.username,
+		colors.RED,
+		colors.GREEN,
+		system.hostname,
+		colors.RESET,
+	)
+}
+
+build_info_line :: proc(icon, title, info: string) -> string {
+	spacing := strings.repeat(" ", INFO_TITLE_SIZE - len(title), context.temp_allocator)
+
+	return fmt.tprintf(
 		"{}{}  {}{}{}{} {}",
 		colors.CYAN,
 		icon,
@@ -24,15 +38,46 @@ print_info_line :: proc(icon, title, info: string) {
 	)
 }
 
-print_info :: proc(system: models.System) {
-	print_info_line("", "User", fmt.tprintf("%s@%s", system.username, system.hostname))
-	print_info_line("", "System", system.system)
-	print_info_line("", "Kernel", system.kernel)
-	print_info_line("", "Desktop", system.desktop)
-	print_info_line("", "CPU", system.cpu.(string))
-	print_info_line("", "Shell", system.shell)
-	print_info_line("", "Uptime", system.uptime)
-	print_info_line("", "Memory", system.memory)
-	print_info_line("󱥎", "Storage (/)", system.storage)
-	print_info_line("", "Colors", system.colors)
+print_info :: proc(info: ^[]string) {
+	for row in info {
+		fmt.println(row)
+	}
+}
+
+print_info_with_logo :: proc(config: models.Config, logo: ^[dynamic]string, info: ^[]string) {
+	is_ascii_shorter := len(logo) < len(info)
+
+	if is_ascii_shorter {
+		difference := len(info) - len(logo)
+		for i := 0; i < difference; i += 1 {
+			append(logo, "")
+		}
+	}
+
+	longest_row := 0
+
+	for &row in logo {
+		if len(row) > longest_row {
+			longest_row = len(row)
+		}
+	}
+
+	row_size := longest_row + LOGO_GAP
+
+	for &row, index in logo {
+		if len(row) < row_size {
+			row = fmt.tprintf(
+				"{}%s%s{}",
+				config.logo_color,
+				row,
+				strings.repeat(" ", row_size - len(row), context.temp_allocator),
+				colors.RESET,
+			)
+		}
+
+		if index < len(info) {
+			row = fmt.tprintf("%s%s", row, info[index])
+		}
+		fmt.println(row)
+	}
 }

@@ -12,4 +12,3 @@ MAGENTA :: "\x1b[35m"
 CYAN :: "\x1b[36m"
 GRAY :: "\x1b[37m"
 BLACK :: "\x1b[30m"
-
