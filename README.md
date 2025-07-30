@@ -2,7 +2,7 @@
 
 ![](vhs/systema.gif)
 
-Systema - System + "ma" (latin for "from") - getting info from system
+> Systema - System + "ma" (latin for "from") - getting info from system
 
 ## Overview
 
