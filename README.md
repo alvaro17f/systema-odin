@@ -6,60 +6,75 @@
 
 ## Overview
 
-Systema is a system information tool written in Odin that provides detailed insights about your system's hardware and software configuration.
+Systema is a fast, lightweight system information tool written in Odin that provides detailed insights about your system's hardware and software configuration.
+It displays system information in a clean, colorful format with ASCII art logos.
 
 ## Features
 
-- Real-time system monitoring
-- Hardware information retrieval
-- System resource usage tracking
-- CPU, memory, storage, and uptime information
-- Desktop environment detection
-- Kernel version and hostname display
+- **Fast & Lightweight**: Written in Odin for optimal performance
+- **Colorful Output**: Rich terminal colors with customizable themes
+- **ASCII Art**: System-specific logos and branding
+- **Comprehensive Info**: CPU, memory, storage, kernel, desktop environment
+- **Customizable**: Configurable output and display options
 
 ## Installation
 
 ### Prerequisites
 
-- [Odin programming language](https://odin-lang.org/)
+- [Odin programming language](https://odin-lang.org/) (latest stable version)
+- Linux system
 - Nix (optional, for development environments)
 
-### Building from Source
+### Quick Install
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/alvaro17f/systema.git
 cd systema
 
-# Build the project
+# Build and run
 ./taskfile build
-
-# Run the application
 ./taskfile run
 ```
 
 ## Usage
 
-![ansi_color_table](https://upload.wikimedia.org/wikipedia/commons/3/34/ANSI_sample_program_output.png)
-
-### Running Systema
+### Basic Usage
 
 ```bash
-# Run with default settings
+# Run systema
 ./taskfile run
 
-# Run with debug information
+# Build optimized release
+./taskfile build
+
+# Run with debug info
 ./taskfile debug
 
-# Run with address sanitizer
+# Run with debug info and address sanitizer
 ./taskfile debug:sanitize
 ```
 
-### Building Systema
+### Command Line Options
 
 ```bash
-# Build optimized version
-./taskfile build
+# Run systema directly
+./systema
+
+# With custom options
+./systema --help
+
+*************************************************************
+ SYSTEMA - Fetch system information with style
+*************************************************************
+-d:           Disable logo
+-l <path>:    Set the logo path
+-c <color>:   Set the logo color by ansi number [default: 36]
+-g <gap>:     Set the gap between logo and info [default:  3]
+-o <offset>:  Set the info offset vertically    [default:  0]
+-h, help:     Display this help message
+-v, version:  Display the current version
+
 ```
 
 ## Development
@@ -68,55 +83,93 @@ cd systema
 
 ```
 .
-├── app/                # Application entry point
-├── colors/             # Color definitions and utilities
-├── models/             # Data models and structures
-├── modules/            # System information modules
-│   ├── colors.odin   # Color system info
-│   ├── cpu.odin      # CPU information
-│   ├── desktop.odin  # Desktop environment detection
-│   ├── hostname.odin # Hostname utilities
-│   ├── kernel.odin   # Kernel information
-│   ├── memory.odin   # Memory usage
-│   ├── shell.odin    # Shell detection
-│   ├── storage.odin  # Storage information
-│   ├── system.odin   # System information
-│   ├── uptime.odin   # System uptime
-│   ├── username.odin # User information
-│   └── ...
-├── utils/              # Utility functions
-├── vhs/                # Terminal recordings
-├── taskfile           # Build and run scripts
-├── flake.nix          # Nix configuration
-├── VERSION            # Version information
-└── README.md          # This file
+├── app/                    # Application initialization
+├── assets/                 # ASCII art and assets
+├── colors/                 # Color definitions and themes
+├── models/                 # Data structures and configuration
+├── modules/                # System information modules
+│   ├── colors.odin        # Color system utilities
+│   ├── cpu.odin           # CPU information and usage
+│   ├── desktop.odin       # Desktop environment detection
+│   ├── hostname.odin      # Hostname utilities
+│   ├── kernel.odin        # Kernel version info
+│   ├── memory.odin        # Memory usage statistics
+│   ├── shell.odin         # Shell detection
+│   ├── storage.odin       # Storage information
+│   ├── system.odin        # System information
+│   ├── uptime.odin        # System uptime tracking
+│   └── username.odin      # User information
+├── utils/                  # Utility functions
+│   ├── flags.odin         # Command line argument parsing
+│   ├── get_logo.odin      # ASCII logo retrieval
+│   └── print_info.odin    # Information display utilities
+├── vhs/                    # Terminal recordings and demos
+├── main.odin              # Main application entry point
+├── taskfile              # Build and development scripts
+├── flake.nix             # Nix development environment
+└── VERSION               # Version tracking
 ```
 
-### Taskfile Commands
+### Development Commands
 
-The `taskfile` script provides convenient commands for development:
+The `taskfile` script provides convenient development commands:
 
-- `run` - Run the application
-- `debug` - Run with debug information
-- `debug:sanitize` - Run with address sanitizer
-- `build` - Build optimized binary
+```bash
+# Development
+./taskfile run          # Run the application
+./taskfile debug        # Run with debug symbols
+./taskfile debug:sanitize  # Run with address sanitizer
 
-### Version Management
+# Building
+./taskfile build        # Build optimized release
+./taskfile clean        # Clean build artifacts
 
-The project version is managed in the `VERSION` file and is automatically included during the build process.
+# Utilities
+./taskfile help         # Show all available commands
+```
+
+### Building from Source
+
+```bash
+# Standard build
+./taskfile build
+
+# Manual build with Odin
+odin build . -out:systema -opt:3
+
+# Debug build
+odin build . -out:systema-debug -debug
+```
+
+## Configuration
+
+Systema uses a simple configuration system located in `models/config.odin`. Currently supports:
+
+- Color theme selection
+- ASCII art display options
+- Information display preferences
 
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+2. Create a feature branch: `git checkout -b feature-name`
+3. Make your changes
+4. Test your changes: `./taskfile run`
+5. Commit your changes: `git commit -am 'feat: add something'` (conventional commits)
+6. Push to the branch: `git push origin feature-name`
+7. Create a Pull Request
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- [microfetch](https://github.com/NotAShelf/microfetch)
+- [microfetch](https://github.com/NotAShelf/microfetch) - Inspiration for system information display
+- [odin-color](https://github.com/hrszpuk/odin-color) - Color utilities
+- [vhs](https://github.com/charmbracelet/vhs) - Terminal recordings
+- [odin](https://odin-lang.org/) - The Odin programming language
+
+## Version
+
+Current version: See [VERSION](VERSION) file
