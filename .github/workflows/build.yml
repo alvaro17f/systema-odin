@@ -22,10 +22,10 @@ jobs:
             artifact_name: ${{ inputs.NAME }}
             asset_name: ${{ inputs.NAME }}-linux-amd64.tar.gz
             asset_directory: /tmp/
-          - os: macos-latest
-            artifact_name: ${{ inputs.NAME }}
-            asset_name: ${{ inputs.NAME }}-macos-arm64.tar.gz
-            asset_directory: /tmp/
+          # - os: macos-latest
+          #   artifact_name: ${{ inputs.NAME }}
+          #   asset_name: ${{ inputs.NAME }}-macos-arm64.tar.gz
+          #   asset_directory: /tmp/
 
     runs-on: ${{ matrix.os }}
 
