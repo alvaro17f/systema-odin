@@ -1,4 +1,3 @@
-#+feature dynamic-literals
 package app
 
 import "../colors"
@@ -35,7 +34,8 @@ init :: proc(name, version: string) {
 	info: [dynamic]string
 	defer delete(info)
 
-	info = [dynamic]string {
+	append_elems(
+		&info,
 		utils.build_username_hostname_line(system, system.username, system.hostname),
 		utils.build_info_line("", "System", system.system),
 		utils.build_info_line("", "Kernel", system.kernel),
@@ -46,7 +46,7 @@ init :: proc(name, version: string) {
 		utils.build_info_line("", "Memory", system.memory),
 		utils.build_info_line("󱥎", "Storage (/)", system.storage),
 		utils.build_info_line("", "Colors", system.colors),
-	}
+	)
 
 	if config.info_offset > 0 {
 		info = utils.add_info_offset(info, config.info_offset)
