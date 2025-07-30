@@ -5,14 +5,10 @@ import "../models"
 import "../modules"
 import "../utils"
 
-config := models.Config {
-	logo        = true,
-	logo_color  = colors.CYAN,
-	logo_path   = "",
-	info_offset = 0,
-}
+init :: proc(config: ^models.Config) {
 
-init :: proc(name, version: string) {
+	utils.update_config(config)
+
 	system := models.System {
 		username = modules.get_username(),
 		hostname = modules.get_hostname(),

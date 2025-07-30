@@ -1,16 +1,27 @@
 package main
 
 import "app"
+import "colors"
 import "core:fmt"
 import "core:mem"
+import "models"
 
 name :: "systema"
 version :: #config(VERSION, "dev")
 
+config := models.Config {
+	name        = name,
+	version     = version,
+	logo        = true,
+	logo_color  = colors.CYAN,
+	logo_path   = "",
+	info_offset = 0,
+}
+
 _main :: proc() {
 	defer free_all(context.temp_allocator)
 
-	app.init(name, version)
+	app.init(&config)
 }
 
 

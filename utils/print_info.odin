@@ -60,7 +60,7 @@ print_info :: proc(info: ^[dynamic]string) {
 }
 
 print_info_with_logo :: proc(
-	config: models.Config,
+	config: ^models.Config,
 	logo: ^[dynamic]string,
 	info: ^[dynamic]string,
 ) {

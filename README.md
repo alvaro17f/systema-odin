@@ -38,6 +38,8 @@ cd systema
 
 ## Usage
 
+![ansi_color_table](https://upload.wikimedia.org/wikipedia/commons/3/34/ANSI_sample_program_output.png)
+
 ### Running Systema
 
 ```bash
