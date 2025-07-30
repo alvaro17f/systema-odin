@@ -30,11 +30,11 @@ get_logo :: proc(path: string) -> [dynamic]string {
 
 	for &line in lines {
 		if strings.contains(line, "\t") {
-			replaced, _ := strings.replace_all(line, "\t", " ")
+			replaced, _ := strings.replace_all(line, "\t", " ", context.temp_allocator)
 			line = replaced
 		}
 		if strings.contains(line, "\n") {
-			replaced, _ := strings.remove_all(line, "\n")
+			replaced, _ := strings.remove_all(line, "\n", context.temp_allocator)
 			line = replaced
 		}
 
