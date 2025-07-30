@@ -77,6 +77,19 @@ cd systema
 
 ```
 
+#### ANSI Color Table
+
+In Systema, we use ANSI color codes to add color to the output. Here's a table of common ANSI color codes:
+
+![ansi_color_table](https://upload.wikimedia.org/wikipedia/commons/3/34/ANSI_sample_program_output.png)
+
+You can change the color of the logo with the `-c` option in the command line.
+
+```bash
+systema -c 36 # blue logo
+
+```
+
 ## Development
 
 ### Project Structure
