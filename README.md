@@ -115,5 +115,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- [Odin programming language](https://odin-lang.org/) for the runtime environment
-- [Nix](https://nixos.org/) for reproducible development environments
+- [microfetch](https://github.com/NotAShelf/microfetch)
