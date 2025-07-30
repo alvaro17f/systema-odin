@@ -21,26 +21,15 @@
 
         version = pkgs.lib.fileContents ./VERSION;
 
-        buildInputs = with pkgs; [ ];
-
-        LD_LIBRARY_PATH =
-          with pkgs;
-          "$LD_LIBRARY_PATH:${
-            lib.makeLibraryPath [
-              libGL
-              xorg.libX11
-              openssl
-            ]
-          }";
+        buildInputs = with pkgs; [ odin ];
       in
       {
         packages.default = pkgs.stdenv.mkDerivation {
           name = name;
           src = ./.;
           buildInputs = buildInputs;
-          LD_LIBRARY_PATH = LD_LIBRARY_PATH;
           buildPhase = ''
-            odin build . -define="VERSION=${version}" -o:speed --collection:lib=lib -out:${name}
+            odin build . -define="VERSION=${version}" -o:speed -out:${name}
           '';
           installPhase = ''
             mkdir -p $out/bin
@@ -50,7 +39,6 @@
 
         devShells.default = pkgs.mkShell {
           buildInputs = buildInputs;
-          LD_LIBRARY_PATH = LD_LIBRARY_PATH;
         };
       }
     );
