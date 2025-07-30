@@ -11,6 +11,21 @@ LOGO_GAP :: 5
 @(private)
 INFO_TITLE_SIZE :: 14
 
+add_info_offset :: proc(info: [dynamic]string, offset: int) -> [dynamic]string {
+	defer delete(info)
+
+	offset_array := make([dynamic]string, offset)
+	for i := 0; i < offset; i += 1 {
+		offset_array[i] = ""
+	}
+
+	for i in info {
+		append(&offset_array, i)
+	}
+
+	return offset_array
+}
+
 build_username_hostname_line :: proc(system: models.System, user: string, host: [65]u8) -> string {
 	return fmt.tprintf(
 		"{}%s{}@{}%s{} ~",
@@ -38,13 +53,17 @@ build_info_line :: proc(icon, title, info: string) -> string {
 	)
 }
 
-print_info :: proc(info: ^[]string) {
+print_info :: proc(info: ^[dynamic]string) {
 	for row in info {
 		fmt.println(row)
 	}
 }
 
-print_info_with_logo :: proc(config: models.Config, logo: ^[dynamic]string, info: ^[]string) {
+print_info_with_logo :: proc(
+	config: models.Config,
+	logo: ^[dynamic]string,
+	info: ^[dynamic]string,
+) {
 	is_ascii_shorter := len(logo) < len(info)
 
 	if is_ascii_shorter {

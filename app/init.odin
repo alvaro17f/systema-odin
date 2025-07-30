@@ -10,7 +10,7 @@ config := models.Config {
 	logo        = true,
 	logo_color  = colors.CYAN,
 	logo_path   = "",
-	info_offset = 10,
+	info_offset = 0,
 }
 
 init :: proc(name, version: string) {
@@ -32,7 +32,10 @@ init :: proc(name, version: string) {
 	logo := utils.get_logo(config.logo_path)
 	defer delete(logo)
 
-	info := []string {
+	info: [dynamic]string
+	defer delete(info)
+
+	info = [dynamic]string {
 		utils.build_username_hostname_line(system, system.username, system.hostname),
 		utils.build_info_line("", "System", system.system),
 		utils.build_info_line("", "Kernel", system.kernel),
@@ -43,6 +46,10 @@ init :: proc(name, version: string) {
 		utils.build_info_line("", "Memory", system.memory),
 		utils.build_info_line("󱥎", "Storage (/)", system.storage),
 		utils.build_info_line("", "Colors", system.colors),
+	}
+
+	if config.info_offset > 0 {
+		info = utils.add_info_offset(info, config.info_offset)
 	}
 
 	if config.logo {
