@@ -1,5 +1,6 @@
 package modules
 
+import "../colors"
 import "core:fmt"
 import "core:sys/posix"
 
@@ -20,5 +21,12 @@ get_storage_info :: proc() -> string {
 	used_size = used_size / (1024 * 1024 * 1024)
 	usage := (used_size / total_size) * 100
 
-	return fmt.tprintf("%2.f GiB / %2.f GiB (%0.f%%)", used_size, total_size, usage)
+	return fmt.tprintf(
+		"%2.f GiB / %2.f GiB ({}%0.f%%{})",
+		used_size,
+		total_size,
+		colors.CYAN,
+		usage,
+		colors.RESET,
+	)
 }

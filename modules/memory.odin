@@ -4,6 +4,7 @@ import "core:fmt"
 import os "core:os/os2"
 import "core:strconv"
 import "core:strings"
+import "../colors"
 
 @(private)
 Memory :: struct {
@@ -51,9 +52,11 @@ get_memory_info :: proc() -> string {
 	}
 
 	return fmt.tprintf(
-		"%.2f GiB / %.2f GiB (%0.f%%)",
+		"%.2f GiB / %.2f GiB ({}%0.f%%{})",
 		meminfo.used,
 		meminfo.total,
+		colors.CYAN,
 		meminfo.used_percent,
+		colors.RESET,
 	)
 }
