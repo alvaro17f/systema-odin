@@ -1,4 +1,4 @@
-Output vhs/ox.gif
+Output vhs/systema.gif
 
 Set Shell "zsh"
 Set FontSize 32
