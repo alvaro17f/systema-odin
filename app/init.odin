@@ -7,7 +7,7 @@ import "../utils"
 
 init :: proc(config: ^models.Config) {
 
-	utils.update_config(config)
+	utils.flags(config)
 
 	system := models.System {
 		username = modules.get_username(),

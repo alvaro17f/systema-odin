@@ -23,7 +23,7 @@ help :: proc(app_name: string) {
   `,
 		colors.BLUE,
 		colors.RED,
-    strings.to_upper(app_name, context.temp_allocator),
+		strings.to_upper(app_name, context.temp_allocator),
 		colors.RESET,
 		colors.BLUE,
 		colors.YELLOW,
@@ -44,7 +44,7 @@ version :: proc(app_name: string, current_version: string) {
 	)
 }
 
-update_config :: proc(config: ^models.Config) {
+flags :: proc(config: ^models.Config) {
 	arguments := os.args[1:]
 
 	for argument, idx in arguments {
