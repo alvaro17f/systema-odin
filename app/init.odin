@@ -1,6 +1,5 @@
 package app
 
-import "../colors"
 import "../models"
 import "../modules"
 import "../utils"
@@ -45,7 +44,7 @@ init :: proc(config: ^models.Config) {
 	)
 
 	if config.info_offset > 0 {
-		info = utils.add_info_offset(info, config.info_offset)
+		utils.add_info_offset(&info, config.info_offset)
 	}
 
 	if config.logo {

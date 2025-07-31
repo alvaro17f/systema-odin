@@ -8,19 +8,10 @@ import "core:strings"
 @(private)
 INFO_TITLE_SIZE :: 14
 
-add_info_offset :: proc(info: [dynamic]string, offset: int) -> [dynamic]string {
-	defer delete(info)
-
-	offset_array := make([dynamic]string, offset)
+add_info_offset :: proc(info: ^[dynamic]string, offset: int) {
 	for i := 0; i < offset; i += 1 {
-		offset_array[i] = ""
+		inject_at(info, 0, "")
 	}
-
-	for i in info {
-		append(&offset_array, i)
-	}
-
-	return offset_array
 }
 
 build_username_hostname_line :: proc(system: models.System, user: string, host: [65]u8) -> string {
