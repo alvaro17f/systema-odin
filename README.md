@@ -34,7 +34,33 @@ cd systema
 
 # Build and run
 ./taskfile build
-./taskfile run
+
+# Move the generated binary to somewhere in your PATH
+```
+
+#### Nixos Flakes Installation
+
+Add this in your nixos configuration:
+
+```nix
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    systema.url = "github:matheus-git/systemd-manager-tui";
+  };
+
+  outputs = { self, nixpkgs, systema, ... }: {
+    nixosConfigurations.yourhostname = nixpkgs.lib.nixosSystem {
+      modules = [
+        {
+          environment.systemPackages = [
+            systema.packages.${pkgs.system}.default
+          ];
+        }
+      ];
+    };
+  };
+}
 ```
 
 ## Usage
@@ -59,10 +85,10 @@ cd systema
 
 ```bash
 # Run systema directly
-./systema
+systema
 
 # With custom options
-./systema --help
+systema help
 
 *************************************************************
  SYSTEMA - Fetch system information with style
@@ -148,10 +174,10 @@ The `taskfile` script provides convenient development commands:
 ./taskfile build
 
 # Manual build with Odin
-odin build . -out:systema -opt:3
+odin build . -out:systema -o:speed
 
-# Debug build
-odin build . -out:systema-debug -debug
+# Debug build with Odin
+odin build . -debug -out:systema
 ```
 
 ## Configuration
