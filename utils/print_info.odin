@@ -4,6 +4,7 @@ import "../colors"
 import "../models"
 import "core:fmt"
 import "core:strings"
+import "core:text/table"
 
 @(private)
 INFO_TITLE_SIZE :: 14
@@ -64,20 +65,24 @@ print_info_with_logo :: proc(
 	longest_row := 0
 
 	for &row in logo {
-		if len(row) > longest_row {
-			longest_row = len(row)
+		if table.unicode_width_proc(row) > longest_row {
+			longest_row = table.unicode_width_proc(row)
 		}
 	}
 
 	row_size := longest_row + config.logo_gap
 
 	for &row, index in logo {
-		if len(row) < row_size {
+		if table.unicode_width_proc(row) < row_size {
 			row = fmt.tprintf(
 				"{}%s%s{}",
 				config.logo_color,
 				row,
-				strings.repeat(" ", row_size - len(row), context.temp_allocator),
+				strings.repeat(
+					" ",
+					row_size - table.unicode_width_proc(row),
+					context.temp_allocator,
+				),
 				colors.RESET,
 			)
 		}
