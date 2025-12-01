@@ -46,7 +46,7 @@ Add this in your nixos configuration:
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    systema.url = "github:matheus-git/systemd-manager-tui";
+    systema.url = "github:alvaro17f/systema-odin";
   };
 
   outputs = { self, nixpkgs, systema, ... }: {
